@@ -8,13 +8,14 @@ fetch("https://restcountries.com/v3.1/all")
         
         const countryCard = document.createElement("a")
         countryCard.classList.add("country-card")
+        countryCard.setAttribute("href", `country.html?name=${country.name.common}`)
         countryCard.innerHTML = `
         <img src=${country.flags.svg} alt="">
                         <div class="card-content">
                             <h3 class="card-title">${country.name.common}</h3>
                             <p><b>Population: </b>${country.population.toLocaleString('en-In')}</p>
                             <p><b>Region: </b>${country.region}</p>
-                            <p><b>Capital: </b>${country.capital}</p>
+                            <p><b>Capital: </b>${country.capital?.[0]}</p>
                         </div>`
         countriesContainer.append(countryCard)
     });
