@@ -24,3 +24,54 @@ body {
   margin-inline: auto;
   padding: 17px 0;
 }
+
+main {
+    padding-inline: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+a {
+    text-decoration-line: none;
+    color: inherit;
+}
+
+.countries-container {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+
+.country-card {
+    width: 250px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding-bottom: 30px;
+    overflow: hidden;
+    margin-top: 40px;
+    transition: all ease-in-out 0.2s;
+    display: inline-block;
+}
+
+.country-card img {
+    width: 100%;
+}
+
+.card-title {
+    margin-block: 10px;
+}
+
+.card-content {
+    padding-left: 10px;
+}
+
+.country-card:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.3);
+}
