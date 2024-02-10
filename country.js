@@ -4,6 +4,17 @@ back.addEventListener("click", ()=> {
     history.back()
 })
 
+const theme = document.querySelector(".theme");
+
+theme.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    if (theme.textContent.trim() === "Dark Mode") {
+        theme.innerHTML = `<i class="fa-regular fa-sun"></i>&nbsp;&nbsp;Light Mode`
+    } else {
+        theme.innerHTML = `<i class="fa-regular fa-moon"></i>&nbsp;&nbsp;Dark Mode`
+    }
+});
+
 const countryName = new URLSearchParams(location.search).get("name");
 console.log(countryName);
 
@@ -11,6 +22,7 @@ fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
   .then((res) => res.json())
   .then((country) => {
     console.log(country[0]);
+    
     const countryPage = document.createElement("div");
     countryPage.classList.add("country-page");
     countryPage.innerHTML = `
@@ -32,8 +44,8 @@ fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
                 </div>
                 <div class="right-details">
                   <p><b>Top Level Domain: </b>${country[0].tld[0]}</p>
-                  <p><b>Currencies: </b>${country[0].Object.keys(obj.currencies)[0].name}</p>
-                  <p><b>Languages: </b>${country[0].languages}</p>
+                  <p><b>Currencies: </b>${Object.values(country[0].currencies)[0].name}</p>
+                  <p><b>Languages: </b>${Object.values(country[0].languages).join(", ")}</p>
                 </div>
               </div>
               <div class="border-countries">
@@ -42,10 +54,18 @@ fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
             </div>
           </div>`;
     countryPageContainer.append(countryPage);
-    const borderCountries = document.querySelector(".border-countries");
-    country[0].borders?.forEach((border) => {
-      const borderName = document.createElement("span");
-      borderName.innerHTML = `${border}`;
-      borderCountries.append(borderName);
-    });
+    if (country[0].borders){
+      country[0].borders.forEach(border => {
+        fetch(`https://restcountries.com/v3.1/alpha/${border}`)
+        .then(res => res.json())
+        .then(data => {
+          const borderCountries = document.querySelector(".border-countries");
+            const borderName = document.createElement("a");
+            borderName.innerHTML = `${data[0].name.common}`;
+            borderName.href = `country.html?name=${data[0].name.common}`
+            borderCountries.append(borderName);
+        })
+      });
+      
+    }
   });
